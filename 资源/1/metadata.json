@@ -1,0 +1,5 @@
+{
+  "name": "Gemini Balance Dashboard",
+  "description": "An MD3-styled dashboard for monitoring Gemini API key usage, statistics, call trends, and key management.",
+  "requestFramePermissions": []
+}

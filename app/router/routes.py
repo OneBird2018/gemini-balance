@@ -104,52 +104,10 @@ def setup_page_routes(app: FastAPI) -> None:
                 logger.warning("Unauthorized access attempt to keys page")
                 return RedirectResponse(url="/", status_code=302)
 
-            key_manager = await get_key_manager_instance()
-            keys_status = await key_manager.get_keys_by_status()
-            total_keys = len(keys_status["valid_keys"]) + len(
-                keys_status["invalid_keys"]
-            )
-            valid_key_count = len(keys_status["valid_keys"])
-            invalid_key_count = len(keys_status["invalid_keys"])
-
-            stats_service = StatsService()
-            api_stats = await stats_service.get_api_usage_stats()
-            logger.info(f"API stats retrieved: {api_stats}")
-
-            logger.info(f"Keys status retrieved successfully. Total keys: {total_keys}")
-            return templates.TemplateResponse(
-                "keys_status.html",
-                {
-                    "request": request,
-                    "valid_keys": {},
-                    "invalid_keys": {},
-                    "total_keys": total_keys,
-                    "valid_key_count": valid_key_count,
-                    "invalid_key_count": invalid_key_count,
-                    "api_stats": api_stats,
-                },
-            )
+            return templates.TemplateResponse("keys_react.html", {"request": request})
         except Exception as e:
-            logger.error(f"Error retrieving keys status or API stats: {str(e)}")
-            # Even if there's an error, render the page with whatever data is available
-            # or with empty/default values, so the frontend can still load.
-            return templates.TemplateResponse(
-                "keys_status.html",
-                {
-                    "request": request,
-                    "valid_keys": {},
-                    "invalid_keys": {},
-                    "total_keys": 0,
-                    "valid_key_count": 0,
-                    "invalid_key_count": 0,
-                    "api_stats": {  # Provide a default structure for api_stats
-                        "calls_1m": {"total": 0, "success": 0, "failure": 0},
-                        "calls_1h": {"total": 0, "success": 0, "failure": 0},
-                        "calls_24h": {"total": 0, "success": 0, "failure": 0},
-                        "calls_month": {"total": 0, "success": 0, "failure": 0},
-                    },
-                },
-            )
+            logger.error(f"Error rendering keys page: {str(e)}")
+            return templates.TemplateResponse("keys_react.html", {"request": request})
 
     @app.get("/config", response_class=HTMLResponse)
     async def config_page(request: Request):

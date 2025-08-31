@@ -24,6 +24,7 @@
         theme: {
           extend: {
             colors: {
+              'dark-bg': '#121212',
               primary: {
                 50: "#eef2ff",
                 100: "#e0e7ff",
@@ -93,6 +94,9 @@
       };
     </script>
     <style>
+      html, body {
+        height: 100%;
+      }
       .glass-card {
           background: rgba(255, 255, 255, 0.95); /* High opacity white for light theme */
           backdrop-filter: blur(16px);
@@ -245,23 +249,6 @@
       .bg-gray-700 *, .bg-gray-800 *, .bg-gray-900 *,
       .bg-slate-500 *, .bg-slate-600 *, .bg-slate-700 *, .bg-slate-800 *, .bg-slate-900 * {
           color: inherit !important;
-      }
-
-      /* Global form element styling for consistency */
-      select, input[type="text"], input[type="number"], input[type="search"],
-      input[type="email"], input[type="password"], input[type="datetime-local"],
-      textarea, .form-input, .form-select {
-          background-color: rgba(255, 255, 255, 0.95) !important;
-          color: #374151 !important; /* gray-700 */
-          border: 1px solid rgba(0, 0, 0, 0.12) !important;
-          border-radius: 0.375rem !important; /* rounded-md */
-      }
-
-      select:focus, input:focus, textarea:focus,
-      .form-input:focus, .form-select:focus {
-          border-color: #3b82f6 !important; /* blue-500 */
-          box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
-          outline: none !important;
       }
 
       /* Fix dropdown option styling */
@@ -461,70 +448,19 @@
     </style>
     {% block head_extra_scripts %}{% endblock %}
   </head>
-  <body class="bg-white min-h-screen text-gray-900 pt-6 pb-16">
-    {% block content %}{% endblock %}
+  <body class="bg-dark-bg text-gray-900 flex flex-col">
+    <div class="flex-grow pt-6">
+      {% block content %}{% endblock %}
+    </div>
 
     <!-- 底部版权 -->
-    <div
-      class="fixed bottom-0 left-0 w-full py-3 bg-white bg-opacity-95 backdrop-blur-md text-sm text-gray-800 border-t border-gray-200 flex flex-col items-center space-y-1"
-    >
-      <!-- 第一行 -->
-      <div class="flex items-center justify-center space-x-2">
-        <span>© <span id="copyright-year"></span> by</span>
-        <a
-          href="https://linux.do/u/snaily"
-          target="_blank"
-          class="text-primary-600 hover:text-primary-800 transition duration-300 flex items-center"
-        >
-          <img
-            src="https://linux.do/user_avatar/linux.do/snaily/288/306510_2.gif"
-            alt="snaily"
-            class="inline-block w-5 h-5 rounded-full align-middle mr-1"
-          />snaily
-        </a>
-        <span class="text-gray-400">|</span>
-        <a
-          href="https://github.com/snailyp/gemini-balance"
-          target="_blank"
-          class="text-primary-600 hover:text-primary-800 transition duration-300 flex items-center"
-        >
-          <i class="fab fa-github mr-1"></i> GitHub
-        </a>
-      </div>
-      <!-- 第二行 -->
-      <div class="flex items-center justify-center space-x-2 text-xs">
-        <a
-          href="https://gb-docs.snaily.top/guide/supportme.html"
-          target="_blank"
-          class="text-primary-600 hover:text-primary-800 transition duration-300 flex items-center"
-        >
-          <i class="fas fa-drumstick-bite text-yellow-600 mr-1"></i> 给作者加鸡腿
-        </a>
-        <span class="text-gray-400">|</span>
-        <a
-          href="https://gb-docs.snaily.top"
-          target="_blank"
-          class="text-primary-600 hover:text-primary-800 transition duration-300 flex items-center"
-        >
-          <i class="fas fa-book mr-1"></i> 在线文档
-        </a>
-<span class="text-gray-400">|</span>
-        <a
-          href="https://t.me/+soaHax5lyI0wZDVl"
-          target="_blank"
-          class="text-primary-600 hover:text-primary-800 transition duration-300 flex items-center"
-        >
-          <i class="fab fa-telegram-plane mr-1"></i> 交流群
-        </a>
-        <span class="text-gray-400">|</span>
-        <span class="text-yellow-600 font-semibold flex items-center">
-          <i class="fas fa-exclamation-triangle mr-1"></i>免费项目，谨防诈骗
-        </span>
-        <span id="version-info-container" class="inline-flex items-center">
-          <!-- Version info will be loaded here by JavaScript -->
-        </span>
-      </div>
-    </div>
+     <footer class="flex items-center justify-center space-x-2 py-6"><div class="flex items-center justify-center space-x-6 text-xs text-neutral-400">
+    <a href="https://github.com/snailyp/gemini-balance" class="hover:text-neutral-300">Github</a>
+    <a href="https://gb-docs.snaily.top/" class="hover:text-neutral-300">帮助</a>
+    <a href="https://linux.do/u/snaily" class="hover:text-neutral-300">关于</a>
+    <a href="https://github.com/snailyp/gemini-balance/blob/main/LICENSE" class="hover:text-neutral-300">条款</a>
+    </div>     </footer>
+         
 
     <!-- 通用JS -->
     <script>

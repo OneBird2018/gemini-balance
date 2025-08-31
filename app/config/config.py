@@ -53,6 +53,17 @@ class Settings(BaseSettings):
     # API相关配置
     API_KEYS: List[str]=[]
     ALLOWED_TOKENS: List[str]=[]
+
+    @field_validator("API_KEYS", "ALLOWED_TOKENS", "PROXIES", "VERTEX_API_KEYS", "SEARCH_MODELS", "IMAGE_MODELS", "FILTERED_MODELS", "URL_CONTEXT_MODELS", "THINKING_MODELS", mode='before')
+    def parse_str_to_list(cls, v):
+        if isinstance(v, str):
+            try:
+                return json.loads(v)
+            except json.JSONDecodeError:
+                # 如果JSON解析失败，可以按逗号分割作为备选方案
+                return [item.strip() for item in v.split(',') if item.strip()]
+        return v
+
     BASE_URL: str = f"https://generativelanguage.googleapis.com/{API_VERSION}"
     AUTH_TOKEN: str = ""
     MAX_FAILURES: int = 3

@@ -1,0 +1,5 @@
+{
+  "name": "Google Sign-In UI Clone",
+  "description": "A static replica of the Google sign-in page, focusing on UI and styling with Tailwind CSS to match the provided image.",
+  "requestFramePermissions": []
+}
